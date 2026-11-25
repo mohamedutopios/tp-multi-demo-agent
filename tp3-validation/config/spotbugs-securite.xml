@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ne retient que les bugs de la catégorie SECURITY (ex. SQL construit par concaténation). -->
+<FindBugsFilter>
+    <Match>
+        <Bug category="SECURITY"/>
+    </Match>
+</FindBugsFilter>

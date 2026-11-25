@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>fr.formation</groupId>
+    <artifactId>tp3-validation</artifactId>
+    <version>1.0.0</version>
+    <name>TP3 - Validation multi-critères : module de facturation hérité</name>
+
+    <properties>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>6.1.3</junit.version>
+        <h2.version>2.5.252</h2.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.6.1</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- Outils d'analyse statique : mvn -P qualite compile spotbugs:check pmd:check -->
+        <profile>
+            <id>qualite</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs-maven-plugin</artifactId>
+                        <version>4.10.5.0</version>
+                        <configuration>
+                            <effort>Max</effort>
+                            <threshold>Low</threshold>
+                            <includeFilterFile>config/spotbugs-securite.xml</includeFilterFile>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-pmd-plugin</artifactId>
+                        <version>3.28.0</version>
+                        <configuration>
+                            <rulesets>
+                                <ruleset>config/pmd-complexite.xml</ruleset>
+                            </rulesets>
+                            <printFailingErrors>true</printFailingErrors>
+                            <failurePriority>5</failurePriority>
+                            <includeTests>false</includeTests>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
